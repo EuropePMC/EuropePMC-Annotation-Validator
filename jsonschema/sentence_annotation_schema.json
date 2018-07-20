@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://europepmc.org/annotations/sentence_annotation_schema.json",
+  "type": "object",
+  "minProperties": 4,
+  "maxProperties": 4,
+  "properties": {
+    "src": {
+      "$id": "/properties/src",
+      "type": "string",
+      "title": "Src source document",
+      "description": "Values: AGR (Agricola), CBA (Chinese biological abstracts), MED (PubMed/MEDLINE), PAT (Patents), CTX (CiteXplore submission), CIT (CiteSeer), PMC (PubMedCentral), ETH (EThOS), HIR (UK NHS Evidence)",
+      "examples": [
+        "PMC"
+      ],
+      "pattern": "AGR|CBA|MED|PAT|CTX|CIT|PMC|ETH|HIR"
+    },
+    "id": {
+      "$id": "/properties/id",
+      "type": "string",
+      "title": "Document ID",
+      "description": "PubMed, PMC or any ID corresponding to field src",
+      "default": "",
+      "examples": [
+        "PMC1475836"
+      ]
+    },
+    "provider": {
+      "$id": "/properties/provider",
+      "type": "string",
+      "title": "Provider Name",
+      "description": "Name of the annotation provider",
+      "examples": [
+        "geneRif"
+      ]
+    },
+    "anns": {
+      "$id": "/properties/anns",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$id": "/properties/anns/items",
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "exact": {
+            "$id": "/properties/anns/items/properties/exact",
+            "type": "string",
+            "title": "Exact",
+            "description": "Annotated sentence that contains grounded entity or entites",
+            "examples": [
+              "The heterodimeric S100A8/S100A9 might therefore play a hitherto unknown role in triggering atherosclerosis in diabetes and renal failure, pathophysiological entities associated with a high AGE burden."
+            ]
+          },
+          "section": {
+            "$id": "/properties/anns/items/properties/section",
+            "type": "string",
+            "title": "Article section",
+            "description": "Name of the section the tagged entity appears in (e.g. Methods, Results). Section is optional however it is strongly recommended to provide either Title, Abstract or Article (for full text).",
+            "examples": [
+              "Abstract"
+            ]
+          },
+          "tags": {
+            "$id": "/properties/anns/items/properties/tags",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$id": "/properties/anns/items/properties/tags/items",
+              "type": "object",
+              "minProperties": 1,
+              "properties": {
+                "name": {
+                  "$id": "/properties/anns/items/properties/tags/items/properties/name",
+                  "type": "string",
+                  "title": "Name ",
+                  "description": "Name of the entity, could be same as exact or any relevant name of the tagged entity",
+                  "examples": [
+                    "heterodimeric S100 calcium binding protein A8/S100 calcium binding protein A9 might play a hitherto unknown role in triggering atherosclerosis in diabetes and renal failure"
+                  ]
+                },
+                "uri": {
+                  "$id": "/properties/anns/items/properties/tags/items/properties/uri",
+                  "type": "string",
+                  "title": "Uri ",
+                  "description": "URI to the ID or the Accession number the entity is grounded to.",
+                  "default": "",
+                  "examples": [
+                    "http://purl.uniprot.org/uniprot/P05109"
+                  ]
+                }
+              },
+              "required": [
+                "name",
+                "uri"
+              ]
+            }
+          }
+        },
+        "required": [
+          "exact",
+          "tags"
+        ]
+      }
+    }
+  },
+  "required": [
+    "src",
+    "id",
+    "provider",
+    "anns"
+  ]
+}
