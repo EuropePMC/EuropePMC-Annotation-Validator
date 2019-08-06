@@ -6,7 +6,7 @@ Created on 18 June 2018
 @contact: avenkat@ebi.ac.uk
 @version: 1.0
 @summary: The script uses the Europe PMC Annotation Validator to validate all incoming (textmined or/and curated) annotations
-@param: filename, provider name and Annotation type. For more information refer to README
+@param: filename, provider name, Annotation type and Output directory path. For more information refer to README
 
 '''
 #import pprint
@@ -43,12 +43,12 @@ def main(agrv):
             for sch_err in errors['schema-errors']:
                 schFH.write(sch_err)
                 schFH.write("\n")            
-    print("Validation process completed, please check the corresponding files in the supplied: %s" % outputdir)
+    print("Validation process completed, please check the corresponding files in the supplied output directory: %s" % outputdir)
     print("If no files were generated the submitted annotations were valid, Please upload the file(s) to the submission system.")
 
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
-        print "Usage: python %s <inputFile> <providerName> <AnntationType> <outputDirectory>" % str(sys.argv[0])
+        print("Usage: python %s <inputFile> <providerName> <AnntationType> <outputDirectory>" % str(sys.argv[0]))
         sys.exit(1)
     else:
         main(sys.argv[1:])

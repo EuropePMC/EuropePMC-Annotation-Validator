@@ -79,15 +79,6 @@
               "Title"
             ]
           },
-          "type": {
-            "$id": "/properties/anns/items/properties/type",
-            "type": "string",
-            "title": "Annotation Type",
-            "description": "The type of annotation tagged (e.g. gene_proteins, diseases). Type is optional however it is strongly recommended to provide annotation type if the data contains mixed annotation types.",
-            "examples": [
-              "diseases"
-            ]
-          },
           "postfix": {
             "$id": "/properties/anns/items/properties/postfix",
             "type": "string",

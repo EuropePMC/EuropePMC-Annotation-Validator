@@ -23,7 +23,14 @@ class AnnotationValidator():
         fn = ''.join(os.path.splitext(os.path.basename(filename)))
         max_length = 10000
         error_length = 100
+        ann_type_by_provider = {'PheneBank': ['phenotype','diseases','cell','molecule','anatomy','gene_mutations','gene_proteins'],
+                                'OGER': ['gene_ontology','cell','cell_line','chemicals','clinical_drug','diseases','gene_proteins','molecular_process','organ_tissue','organisms','sequence']
+                                }
+        flag = False
         
+        if providerName in ann_type_by_provider.keys():
+            flag = True
+         
         try:
             with open(filename, "rb") as annFH:
                 lineno = None
@@ -35,7 +42,7 @@ class AnnotationValidator():
                         sch_message = "File: " + fn + ", Line: " + str(lineno) + ", Message: " +  repr(jsonerr)
                         errorsMap['schema-errors'].append(str(sch_message)) 
                                                     
-                    if lineno >= max_length:
+                    if lineno > max_length:
                         len_message = "NOTE: The annotation file %s contains over %d lines. Please consider splitting the file before submission" % (fn, lineno) 
                         errorsMap['schema-errors'].append(str(len_message))
                          
@@ -69,6 +76,15 @@ class AnnotationValidator():
                                             prefix_message =  "File: " + fn + ", Line number: "+ str(line) + ", JSON path : " + "/" + key + "/" + str(jsonObject[key].index(annotation)) + \
                                             ", Message: Either 'prefix' or 'postfix' is a required field. Alternatively, for validating sentence based annotations use the corresponding json schema"
                                             errorsMap['schema-errors'].append(str(prefix_message))
+                                    
+                                        if flag == True:
+                                            if annotation['type'] not in ann_type_by_provider[providerName]:
+                                                ann_type_message = "File: " + fn + ", Line number: "+ str(line) + ", JSON path : " + "/" + key + "/" + str(jsonObject[key].index(annotation)) + \
+                                            ", Message: The value for 'type' field does not match our records. Please provide the appropriate annotation type as registered."
+                                            errorsMap['schema-errors'].append(str(ann_type_message))
+                                            
+                     
+                                            
                             except KeyError, keyerr:
                                 key_message =  "File: " + fn + ", Line number: " + str(line) + ", JSON path : " + "/" + key + \
                                 ", Message: " + repr(keyerr)
@@ -98,10 +114,11 @@ class AnnotationValidator():
 
                             if key == "anns":
                                 for annotation in jsonObject[key]:
-                                    if ('positon' in annotation or 'prefix' in annotation or 'postfix' in annotation): 
+                                    if ('position' in annotation or 'prefix' in annotation or 'postfix' in annotation): 
                                         warning_message =  "File: " + fn + ", Line number: "+ str(line) + ", JSON path : " + "/" + key + "/" + str(jsonObject[key].index(annotation)) + \
                                         ", Message: Found 'position'|'prefix'|'postfix' field(s). For validating Named Entity annotations use the corresponding json schema"
                                         errorsMap['schema-errors'].append(str(warning_message))
+                                    
                                                
                         for error in sorted(sent_jsonSchema.iter_errors(jsonObject), key=lambda e: e.path):
                             location = '/' + '/'.join([str(c) for c in error.relative_path])
