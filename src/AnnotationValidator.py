@@ -80,8 +80,8 @@ class AnnotationValidator():
                                         if flag == True:
                                             if annotation['type'] not in ann_type_by_provider[providerName]:
                                                 ann_type_message = "File: " + fn + ", Line number: "+ str(line) + ", JSON path : " + "/" + key + "/" + str(jsonObject[key].index(annotation)) + \
-                                            ", Message: The value for 'type' field does not match our records. Please provide the appropriate annotation type as registered."
-                                            errorsMap['schema-errors'].append(str(ann_type_message))
+                                                ", Message: The value for 'type' field does not match our records. Please provide the appropriate annotation type as registered."
+                                                errorsMap['schema-errors'].append(str(ann_type_message))
                                             
                      
                                             
