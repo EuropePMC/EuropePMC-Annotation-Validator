@@ -24,7 +24,7 @@ class AnnotationValidator():
         max_length = 10000
         error_length = 100
         ann_type_by_provider = {'PheneBank': ['phenotype','diseases','cell','molecule','anatomy','gene_mutations','gene_proteins'],
-                                'OGER': ['gene_ontology','cell','cell_line','chemicals','clinical_drug','diseases','gene_proteins','molecular_process','organ_tissue','organisms','sequence']
+                                'OGER': ['biological_process', 'cell', 'cell_line', 'cellular_component', 'chemical', 'clinical_drug', 'disease', 'gene_protein', 'molecular_function', 'molecular_process', 'organ_tissue', 'organism', 'sequence']
                                 }
         flag = False
         
