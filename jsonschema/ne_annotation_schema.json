@@ -132,8 +132,8 @@
           }
         },
         "required": [
-          "position",
           "exact",
+          "type",
           "tags"
         ]
       }
